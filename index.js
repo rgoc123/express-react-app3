@@ -5,6 +5,15 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import {
+  Route,
+  Redirect,
+  Switch,
+  Link,
+  HashRouter
+} from 'react-router-dom';
+
+import TestForm from './components/testForm';
 
 //top level of React component hierarchy
 class App extends React.Component {
@@ -12,6 +21,8 @@ class App extends React.Component {
     return (
       <div className="app">
         <h1>Hello world!</h1>
+
+        <Route exact path="/testform" component={TestForm} />
       </div>
     )
   }
@@ -25,7 +36,9 @@ let store = createStore(
 
 ReactDOM.render(
   <Provider store = { store }>
-    <App/>
+    <HashRouter>
+      <App/>
+    </HashRouter>
   </Provider>,
   document.getElementById('app')
 )
