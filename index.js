@@ -14,6 +14,7 @@ import {
 } from 'react-router-dom';
 
 import TestForm from './components/testForm';
+import ShowsIndex from './components/showsIndex';
 
 //top level of React component hierarchy
 class App extends React.Component {
@@ -23,6 +24,7 @@ class App extends React.Component {
         <h1>Hello world!</h1>
 
         <Route exact path="/testform" component={TestForm} />
+        <Route exact path="/shows" component={ShowsIndex} />
       </div>
     )
   }

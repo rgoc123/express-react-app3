@@ -9,39 +9,29 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// API Service
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/ExpressReactApp3');
+mongoose.Promise = global.Promise;
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // view engine setup
 app.set('view engine', 'html');
 
+// middleware chain
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
+// Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// API Service
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/ExpressReactApp3')
-  .then(() =>  console.log('connection succesful'))
-  .catch((err) => console.error(err));
-
-var Shows = require('./models/ShowModel.js');
-
-app.post('/testform', function(req, res){
-  var show = new Shows();
-
-  show.band = "Red Hot Chili Peppers";
-  show.location = "Session 73";
-
-  show.save(function(err) {
-    if (err) {
-      res.send(err);
-    }
-    res.json({message: 'Show created!'})
-  });
-});
+// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
