@@ -26604,7 +26604,7 @@ var ShowsIndex = function (_React$Component) {
         return this.state.shows.map(function (show) {
           return _react2.default.createElement(
             'li',
-            null,
+            { key: show._id },
             _react2.default.createElement(
               'span',
               null,
@@ -26622,7 +26622,6 @@ var ShowsIndex = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-
       if (this.state.shows.length > 0) {
         console.log(this.state.shows);
         console.log("hey");

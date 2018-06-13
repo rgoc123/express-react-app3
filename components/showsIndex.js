@@ -31,7 +31,7 @@ class ShowsIndex extends React.Component {
   createShowsList() {
     if (this.state.shows) {
       return this.state.shows.map(show => (
-        <li>
+        <li key={show._id}>
           <span>{show.band}</span>
           <span>{show.location}</span>
         </li>
@@ -40,7 +40,6 @@ class ShowsIndex extends React.Component {
   }
 
   render() {
-
     if (this.state.shows.length > 0) {
       console.log(this.state.shows);
       console.log("hey");
@@ -59,7 +58,6 @@ class ShowsIndex extends React.Component {
   componentDidMount() {
     this.myFetch();
   }
-
 
 }
 
