@@ -15,6 +15,8 @@ router.get('/shows', show_controller.index);
 
 router.get('/testform', show_controller.show_test);
 
-router.post('/testform', show_controller.show_create);
+//router.post('/testform', show_controller.show_create);
+
+router.post('/createShow', show_controller.show_create);
 
 module.exports = router;

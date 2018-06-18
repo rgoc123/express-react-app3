@@ -20,6 +20,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
+// var engines = require('consolidate');
+//
+// app.set('views', __dirname + '/views');
+// app.engine('html', engines.mustache);
 app.set('view engine', 'html');
 
 // middleware chain

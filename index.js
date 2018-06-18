@@ -13,8 +13,13 @@ import {
   HashRouter
 } from 'react-router-dom';
 
+// API request
+import createShows from './util/shows';
+
+// Components
 import TestForm from './components/testForm';
 import ShowsIndex from './components/showsIndex';
+import ShowCreateForm from './components/ShowCreateForm';
 
 //top level of React component hierarchy
 class App extends React.Component {
@@ -25,6 +30,7 @@ class App extends React.Component {
 
         <Route exact path="/testform" component={TestForm} />
         <Route exact path="/shows" component={ShowsIndex} />
+        <Route exact path="/createShow" component={ShowCreateForm} />
       </div>
     )
   }
@@ -39,7 +45,7 @@ let store = createStore(
 ReactDOM.render(
   <Provider store = { store }>
     <HashRouter>
-      <App/>
+      <App createShows={createShows}/>
     </HashRouter>
   </Provider>,
   document.getElementById('app')
