@@ -26719,8 +26719,6 @@ var ShowCreateForm = function (_React$Component) {
       location: ""
     };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
-    // //this.createShows = createShows;
-    // this.createShows = this.createShows.bind(this);
     return _this;
   }
 

@@ -12,8 +12,6 @@ class ShowCreateForm extends React.Component {
       location: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
-    // //this.createShows = createShows;
-    // this.createShows = this.createShows.bind(this);
   }
 
   update(field) {
@@ -29,7 +27,7 @@ class ShowCreateForm extends React.Component {
       headers: {
         'content-type': 'application/json'
       }
-    }).then(() => this.props.history.push('/shows')); 
+    }).then(() => this.props.history.push('/shows'));
 
     //.then(response => response.json());
   }
