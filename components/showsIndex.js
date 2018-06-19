@@ -23,7 +23,7 @@ class ShowsIndex extends React.Component {
   deleteShow(id) {
     return fetch(`/shows/${id}`, {
       method: 'DELETE'
-    }).then(() => this.createShowsList());
+    }).then(this.getShowsIndex());
   }
 
   constructor(props) {

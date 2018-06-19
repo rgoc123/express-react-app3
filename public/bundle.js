@@ -26619,13 +26619,9 @@ var ShowsIndex = function (_React$Component) {
   }, {
     key: 'deleteShow',
     value: function deleteShow(id) {
-      var _this3 = this;
-
       return fetch('/shows/' + id, {
         method: 'DELETE'
-      }).then(function () {
-        return _this3.createShowsList();
-      });
+      }).then(this.getShowsIndex());
     }
   }]);
 
@@ -26643,7 +26639,7 @@ var ShowsIndex = function (_React$Component) {
   _createClass(ShowsIndex, [{
     key: 'createShowsList',
     value: function createShowsList() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (this.state.shows) {
         return this.state.shows.map(function (show) {
@@ -26663,7 +26659,7 @@ var ShowsIndex = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { onClick: function onClick() {
-                  return _this4.deleteShow(show._id);
+                  return _this3.deleteShow(show._id);
                 } },
               'Delete'
             )
