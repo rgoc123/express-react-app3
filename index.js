@@ -31,6 +31,7 @@ class App extends React.Component {
         <Route exact path="/testform" component={TestForm} />
         <Route exact path="/shows" component={ShowsIndex} />
         <Route exact path="/createShow" component={ShowCreateForm} />
+        <Route exact path="/shows/:id" />
       </div>
     )
   }

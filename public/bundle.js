@@ -3749,7 +3749,8 @@ var App = function (_React$Component) {
         ),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/testform', component: _testForm2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows', component: _showsIndex2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/createShow', component: _ShowCreateForm2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/createShow', component: _ShowCreateForm2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows/:id' })
       );
     }
   }]);
@@ -26618,8 +26619,12 @@ var ShowsIndex = function (_React$Component) {
   }, {
     key: 'deleteShow',
     value: function deleteShow(id) {
-      fetch('/shows/' + id, {
+      var _this3 = this;
+
+      return fetch('/shows/' + id, {
         method: 'DELETE'
+      }).then(function () {
+        return _this3.createShowsList();
       });
     }
   }]);
@@ -26632,13 +26637,14 @@ var ShowsIndex = function (_React$Component) {
     _this.state = {
       shows: []
     };
-
     return _this;
   }
 
   _createClass(ShowsIndex, [{
     key: 'createShowsList',
     value: function createShowsList() {
+      var _this4 = this;
+
       if (this.state.shows) {
         return this.state.shows.map(function (show) {
           return _react2.default.createElement(
@@ -26656,7 +26662,9 @@ var ShowsIndex = function (_React$Component) {
             ),
             _react2.default.createElement(
               'button',
-              { onClick: true },
+              { onClick: function onClick() {
+                  return _this4.deleteShow(show._id);
+                } },
               'Delete'
             )
           );

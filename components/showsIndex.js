@@ -21,9 +21,9 @@ class ShowsIndex extends React.Component {
   }
 
   deleteShow(id) {
-    fetch(`/shows/${id}`, {
+    return fetch(`/shows/${id}`, {
       method: 'DELETE'
-    });
+    }).then(() => this.createShowsList());
   }
 
   constructor(props) {
@@ -31,7 +31,6 @@ class ShowsIndex extends React.Component {
     this.state = {
       shows: []
     };
-
   }
 
   createShowsList() {
@@ -40,7 +39,7 @@ class ShowsIndex extends React.Component {
         <li key={show._id}>
           <span>{show.band}</span>
           <span>{show.location}</span>
-          <button onClick>Delete</button>
+          <button onClick={() => this.deleteShow(show._id)}>Delete</button>
         </li>
       ));
     }

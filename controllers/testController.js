@@ -29,3 +29,15 @@ exports.show_create = function(req, res) {
     res.redirect('/shows');
   });
 };
+
+exports.show_delete = function(req, res) {
+  console.log(req.params.id);
+  var show = Show.findById(req.params.id);
+
+  show.remove(function(err) {
+    if (err) {
+      res.send(err);
+    }
+    
+  });
+}
