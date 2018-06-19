@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 class ShowsIndex extends React.Component {
 
-  myFetch() {
+  getShowsIndex() {
     fetch('http://localhost:3000/shows', {
       method: 'GET',
       async: false
@@ -17,6 +17,12 @@ class ShowsIndex extends React.Component {
       } else {
         console.log("error");
       }
+    });
+  }
+
+  deleteShow(id) {
+    fetch(`/shows/${id}`, {
+      method: 'DELETE'
     });
   }
 
@@ -34,6 +40,7 @@ class ShowsIndex extends React.Component {
         <li key={show._id}>
           <span>{show.band}</span>
           <span>{show.location}</span>
+          <button onClick>Delete</button>
         </li>
       ));
     }
@@ -56,7 +63,7 @@ class ShowsIndex extends React.Component {
   }
 
   componentDidMount() {
-    this.myFetch();
+    this.getShowsIndex();
   }
 
 }

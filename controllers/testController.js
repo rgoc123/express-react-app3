@@ -18,14 +18,12 @@ exports.show_test = function(req, res) {
 };
 
 exports.show_create = function(req, res) {
-  console.log(req.param('band'));
   var show = new Show();
   show.band = req.param('band');
   show.location = req.param('location');
 
   show.save(function(err) {
     if (err) {
-      console.log(err);
       res.send(err);
     }
     res.redirect('/shows');
