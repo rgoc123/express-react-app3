@@ -31,14 +31,14 @@ exports.show_create = function(req, res) {
 };
 
 exports.show_edit = function(req, res, next) {
-  Show.findById(req.params.id, function(err, p) {
-    if (!p) {
+  Show.findById(req.params.id, function(err, show) {
+    if (!show) {
       return next(new Error('Could not load Document'));
     } else {
-      p.band = req.param('band');
-      p.location = req.param('location');
+      show.band = req.param('band');
+      show.location = req.param('location');
 
-      p.save(function(err) {
+      show.save(function(err) {
         if (err) {
           res.send(err);
         }
