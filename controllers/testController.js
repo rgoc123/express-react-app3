@@ -39,10 +39,10 @@ exports.show_edit = function(req, res, next) {
       p.location = req.param('location');
 
       p.save(function(err) {
-        if (err)
-          console.log(err);
-        else
-          console.log('success');
+        if (err) {
+          res.send(err);
+        }
+        res.redirect('/shows');
       });
     }
   });
