@@ -26659,6 +26659,13 @@ var ShowsIndex = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { onClick: function onClick() {
+                  return _this3.editShow(show._id);
+                } },
+              'Edit'
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: function onClick() {
                   return _this3.deleteShow(show._id);
                 } },
               'Delete'

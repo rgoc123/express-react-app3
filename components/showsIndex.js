@@ -39,6 +39,7 @@ class ShowsIndex extends React.Component {
         <li key={show._id}>
           <span>{show.band}</span>
           <span>{show.location}</span>
+          <button onClick={() => this.editShow(show._id)}>Edit</button>
           <button onClick={() => this.deleteShow(show._id)}>Delete</button>
         </li>
       ));
