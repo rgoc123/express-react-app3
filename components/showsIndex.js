@@ -20,6 +20,10 @@ class ShowsIndex extends React.Component {
     });
   }
 
+  editShow(id) {
+    this.props.history.push(`/shows/${id}`)
+  }
+
   deleteShow(id) {
     return fetch(`/shows/${id}`, {
       method: 'DELETE'

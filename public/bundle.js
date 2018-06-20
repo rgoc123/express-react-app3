@@ -3712,6 +3712,10 @@ var _ShowCreateForm = __webpack_require__(104);
 
 var _ShowCreateForm2 = _interopRequireDefault(_ShowCreateForm);
 
+var _ShowEditForm = __webpack_require__(105);
+
+var _ShowEditForm2 = _interopRequireDefault(_ShowEditForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3750,7 +3754,7 @@ var App = function (_React$Component) {
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/testform', component: _testForm2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows', component: _showsIndex2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/createShow', component: _ShowCreateForm2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows/:id' })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows/:id', component: _ShowEditForm2.default })
       );
     }
   }]);
@@ -26617,6 +26621,11 @@ var ShowsIndex = function (_React$Component) {
       });
     }
   }, {
+    key: 'editShow',
+    value: function editShow(id) {
+      this.props.history.push('/shows/' + id);
+    }
+  }, {
     key: 'deleteShow',
     value: function deleteShow(id) {
       return fetch('/shows/' + id, {
@@ -26818,6 +26827,107 @@ var ShowCreateForm = function (_React$Component) {
 }(_react2.default.Component);
 
 module.exports = ShowCreateForm;
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(12);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouterDom = __webpack_require__(34);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ShowEditForm = function (_React$Component) {
+  _inherits(ShowEditForm, _React$Component);
+
+  function ShowEditForm() {
+    _classCallCheck(this, ShowEditForm);
+
+    var _this = _possibleConstructorReturn(this, (ShowEditForm.__proto__ || Object.getPrototypeOf(ShowEditForm)).call(this));
+
+    _this.state = {
+      band: "",
+      location: ""
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(ShowEditForm, [{
+    key: 'update',
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: 'editShow',
+    value: function editShow(showId, show) {
+      var _this3 = this;
+
+      return fetch('/shows/' + showId, {
+        method: 'PUT',
+        body: JSON.stringify(show),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function () {
+        return _this3.props.history.push('/shows');
+      });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var showId = this.props.location.pathname.slice(7);
+      this.editShow(showId, {
+        band: this.state.band,
+        location: this.state.location
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { type: 'text', onChange: this.update("band") }),
+          _react2.default.createElement('input', { type: 'text', onChange: this.update("location") }),
+          _react2.default.createElement('input', { type: 'submit', value: 'Edit Show' })
+        )
+      );
+    }
+  }]);
+
+  return ShowEditForm;
+}(_react2.default.Component);
+
+module.exports = ShowEditForm;
 
 /***/ })
 /******/ ]);

@@ -20,6 +20,7 @@ import createShows from './util/shows';
 import TestForm from './components/testForm';
 import ShowsIndex from './components/showsIndex';
 import ShowCreateForm from './components/ShowCreateForm';
+import ShowEditForm from './components/ShowEditForm';
 
 //top level of React component hierarchy
 class App extends React.Component {
@@ -31,9 +32,9 @@ class App extends React.Component {
         <Route exact path="/testform" component={TestForm} />
         <Route exact path="/shows" component={ShowsIndex} />
         <Route exact path="/createShow" component={ShowCreateForm} />
-        <Route exact path="/shows/:id" />
+        <Route exact path="/shows/:id" component={ShowEditForm} />
       </div>
-    )
+    );
   }
 }
 

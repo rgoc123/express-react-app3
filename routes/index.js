@@ -12,4 +12,6 @@ router.post('/createShow', show_controller.show_create);
 
 router.delete('/shows/:id', show_controller.show_delete);
 
+router.put('/shows/:id', show_controller.show_edit);
+
 module.exports = router;
