@@ -10,8 +10,6 @@ class ShowsIndex extends React.Component {
     }).then((data) => {
       if (data.ok) {
         data.json().then((newData) => {
-          console.log(newData);
-          console.log(this);
           this.setState({'shows': newData});
         });
       } else {
@@ -52,8 +50,6 @@ class ShowsIndex extends React.Component {
 
   render() {
     if (this.state.shows.length > 0) {
-      console.log(this.state.shows);
-      console.log("hey");
       return (
         <div>
           <h1>Shows Index</h1>

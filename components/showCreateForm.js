@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, withRouter } from 'react-router-dom';
 
-import createShows from '../util/shows';
+import { createShow } from '../util/shows';
 
 class ShowCreateForm extends React.Component {
   constructor() {
@@ -20,24 +20,13 @@ class ShowCreateForm extends React.Component {
     });
   }
 
-  createShow(show) {
-    return fetch('/createShow', {
-      method: 'POST',
-      body: JSON.stringify(show),
-      headers: {
-        'content-type': 'application/json'
-      }
-    }).then(() => this.props.history.push('/shows'));
-
-    //.then(response => response.json());
-  }
-
   handleSubmit(e) {
     e.preventDefault();
-    this.createShow({
+    createShow({
       band: this.state.band,
       location: this.state.location
     });
+    this.props.history.push('/shows');
   }
 
   render() {

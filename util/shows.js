@@ -1,6 +1,9 @@
-export const createShows = (show) => {
-  fetch('http://localhost:3000/shows', {
+export const createShow = (show) => {
+  fetch('/createShow', {
     method: 'POST',
-    data: shows
+    body: JSON.stringify(show),
+    headers: {
+      'content-type': 'application/json'
+    }
   });
 };
