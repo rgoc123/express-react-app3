@@ -1,17 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 
 class ShowsIndex extends React.Component {
 
   getShowsIndex() {
-    fetch('http://localhost:3000/shows', {
+    fetch('/shows', {
       method: 'GET',
       async: false
     }).then((data) => {
       if (data.ok) {
-        data.json().then((newData) => {
-          this.setState({'shows': newData});
-        });
+        data.json().then(newData => this.setState({'shows': newData}));
       } else {
         console.log("error");
       }
@@ -19,7 +18,7 @@ class ShowsIndex extends React.Component {
   }
 
   editShow(id) {
-    this.props.history.push(`/shows/${id}`)
+    this.props.history.push(`/shows/${id}`);
   }
 
   deleteShow(id) {
@@ -53,6 +52,7 @@ class ShowsIndex extends React.Component {
       return (
         <div>
           <h1>Shows Index</h1>
+          <Link to="/createShow">Create a New Show!</Link>
           <ul>
             {this.createShowsList()}
           </ul>

@@ -3752,7 +3752,7 @@ var App = function (_React$Component) {
         _react2.default.createElement(
           'h1',
           null,
-          'Hello world!'
+          'The Shows!'
         ),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/testform', component: _testForm2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows', component: _showsIndex2.default }),
@@ -26592,6 +26592,8 @@ var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _reactRouterDom = __webpack_require__(19);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26608,13 +26610,13 @@ var ShowsIndex = function (_React$Component) {
     value: function getShowsIndex() {
       var _this2 = this;
 
-      fetch('http://localhost:3000/shows', {
+      fetch('/shows', {
         method: 'GET',
         async: false
       }).then(function (data) {
         if (data.ok) {
           data.json().then(function (newData) {
-            _this2.setState({ 'shows': newData });
+            return _this2.setState({ 'shows': newData });
           });
         } else {
           console.log("error");
@@ -26695,6 +26697,11 @@ var ShowsIndex = function (_React$Component) {
             'h1',
             null,
             'Shows Index'
+          ),
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/createShow' },
+            'Create a New Show!'
           ),
           _react2.default.createElement(
             'ul',

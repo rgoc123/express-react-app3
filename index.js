@@ -27,7 +27,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <h1>Hello world!</h1>
+        <h1>The Shows!</h1>
 
         <Route exact path="/testform" component={TestForm} />
         <Route exact path="/shows" component={ShowsIndex} />
