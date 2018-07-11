@@ -3668,6 +3668,16 @@ var createShow = exports.createShow = function createShow(show) {
   });
 };
 
+var editShow = exports.editShow = function editShow(showId, show) {
+  fetch('/shows/' + showId, {
+    method: 'PUT',
+    body: JSON.stringify(show),
+    headers: {
+      'content-type': 'application/json'
+    }
+  });
+};
+
 /***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -26835,6 +26845,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(19);
 
+var _shows = __webpack_require__(41);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -26871,29 +26883,15 @@ var ShowEditForm = function (_React$Component) {
       };
     }
   }, {
-    key: 'editShow',
-    value: function editShow(showId, show) {
-      var _this3 = this;
-
-      return fetch('/shows/' + showId, {
-        method: 'PUT',
-        body: JSON.stringify(show),
-        headers: {
-          'content-type': 'application/json'
-        }
-      }).then(function () {
-        return _this3.props.history.push('/shows');
-      });
-    }
-  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
       var showId = this.props.location.pathname.slice(7);
-      this.editShow(showId, {
+      (0, _shows.editShow)(showId, {
         band: this.state.band,
         location: this.state.location
       });
+      this.props.history.push('/shows');
     }
   }, {
     key: 'render',

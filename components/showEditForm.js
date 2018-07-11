@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, withRouter } from 'react-router-dom';
 
+import { editShow } from '../util/shows';
+
 class ShowEditForm extends React.Component {
 
   constructor() {
@@ -19,23 +21,14 @@ class ShowEditForm extends React.Component {
     });
   }
 
-  editShow(showId, show) {
-    return fetch(`/shows/${showId}`, {
-      method: 'PUT',
-      body: JSON.stringify(show),
-      headers: {
-        'content-type': 'application/json'
-      }
-    }).then(() => this.props.history.push('/shows'));
-  }
-
   handleSubmit(e) {
     e.preventDefault();
     let showId = this.props.location.pathname.slice(7);
-    this.editShow(showId, {
+    editShow(showId, {
       band: this.state.band,
       location: this.state.location
     });
+    this.props.history.push('/shows');
   }
 
   render() {
