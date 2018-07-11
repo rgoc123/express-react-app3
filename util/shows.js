@@ -1,5 +1,5 @@
 export const createShow = (show) => {
-  fetch('/createShow', {
+  return fetch('/createShow', {
     method: 'POST',
     body: JSON.stringify(show),
     headers: {
@@ -8,8 +8,21 @@ export const createShow = (show) => {
   });
 };
 
+export const fetchShow = (showId) => {
+  return fetch(`/shows/${showId}`, {
+    method: 'GET',
+    async: false
+  }).then((data) => {
+    if (data.ok) {
+      data.json().then((data) => data);
+    } else {
+      console.log("error getting show");
+    }
+  });
+}
+
 export const editShow = (showId, show) => {
-  fetch(`/shows/${showId}`, {
+  return fetch(`/shows/${showId}`, {
     method: 'PUT',
     body: JSON.stringify(show),
     headers: {

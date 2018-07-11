@@ -3659,7 +3659,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var createShow = exports.createShow = function createShow(show) {
-  fetch('/createShow', {
+  return fetch('/createShow', {
     method: 'POST',
     body: JSON.stringify(show),
     headers: {
@@ -3668,8 +3668,23 @@ var createShow = exports.createShow = function createShow(show) {
   });
 };
 
+var fetchShow = exports.fetchShow = function fetchShow(showId) {
+  return fetch('/shows/' + showId, {
+    method: 'GET',
+    async: false
+  }).then(function (data) {
+    if (data.ok) {
+      data.json().then(function (data) {
+        return data;
+      });
+    } else {
+      console.log("error getting show");
+    }
+  });
+};
+
 var editShow = exports.editShow = function editShow(showId, show) {
-  fetch('/shows/' + showId, {
+  return fetch('/shows/' + showId, {
     method: 'PUT',
     body: JSON.stringify(show),
     headers: {
@@ -3709,10 +3724,6 @@ var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
 var _reactRouterDom = __webpack_require__(19);
 
-var _shows = __webpack_require__(41);
-
-var _shows2 = _interopRequireDefault(_shows);
-
 var _testForm = __webpack_require__(102);
 
 var _testForm2 = _interopRequireDefault(_testForm);
@@ -3729,6 +3740,10 @@ var _ShowEditForm = __webpack_require__(105);
 
 var _ShowEditForm2 = _interopRequireDefault(_ShowEditForm);
 
+var _showFormContainer = __webpack_require__(107);
+
+var _showFormContainer2 = _interopRequireDefault(_showFormContainer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3737,7 +3752,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// API request
+// APIs
 
 
 // Components
@@ -3766,8 +3781,8 @@ var App = function (_React$Component) {
         ),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/testform', component: _testForm2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows', component: _showsIndex2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/createShow', component: _ShowCreateForm2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows/:id', component: _ShowEditForm2.default })
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/createShow', component: _showFormContainer2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shows/:id', component: _showFormContainer2.default })
       );
     }
   }]);
@@ -3788,7 +3803,7 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(
     _reactRouterDom.HashRouter,
     null,
-    _react2.default.createElement(App, { createShows: _shows2.default })
+    _react2.default.createElement(App, null)
   )
 ), document.getElementById('app'));
 
@@ -26914,6 +26929,159 @@ var ShowEditForm = function (_React$Component) {
 }(_react2.default.Component);
 
 module.exports = ShowEditForm;
+
+/***/ }),
+/* 106 */,
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(53);
+
+var _reactRouterDom = __webpack_require__(19);
+
+var _shows = __webpack_require__(41);
+
+var _showForm = __webpack_require__(108);
+
+var _showForm2 = _interopRequireDefault(_showForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mSTP = function mSTP(state, ownProps) {
+
+  if (ownProps.match.path === '/createShow') {
+
+    return {
+      formType: "new"
+    };
+  } else {
+    return {
+      formType: "edit"
+    };
+  }
+};
+
+var mDTP = function mDTP(dispatch, ownProps) {
+
+  if (ownProps.match.path.includes("createShow")) {
+    return {
+      submitShow: function submitShow(show) {
+        return (0, _shows.createShow)(show);
+      }
+    };
+  } else {
+    return {
+      fetchShow: function fetchShow(showId) {
+        return (0, _shows.fetchShow)(showId);
+      },
+      submitShow: function submitShow(showId, show) {
+        return (0, _shows.editShow)(showId, show);
+      }
+    };
+  }
+};
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mDTP)(_showForm2.default));
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRouterDom = __webpack_require__(19);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ShowForm = function (_React$Component) {
+  _inherits(ShowForm, _React$Component);
+
+  function ShowForm(props) {
+    _classCallCheck(this, ShowForm);
+
+    var _this = _possibleConstructorReturn(this, (ShowForm.__proto__ || Object.getPrototypeOf(ShowForm)).call(this, props));
+
+    _this.state = {
+      band: "",
+      location: ""
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(ShowForm, [{
+    key: 'update',
+    value: function update(field) {
+      var _this2 = this;
+
+      return function (e) {
+        return _this2.setState(_defineProperty({}, field, e.currentTarget.value));
+      };
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      if (this.props.match.path === '/createShow') {
+        this.props.submitShow({
+          band: this.state.band,
+          location: this.state.location
+        }).then(this.props.history.push('/shows'));
+      } else {
+        var showId = this.props.match.params.id;
+        this.props.submitShow(showId, {
+          band: this.state.band,
+          location: this.state.location
+        }).then(this.props.history.push('/shows'));
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { type: 'text', onChange: this.update("band") }),
+          _react2.default.createElement('input', { type: 'text', onChange: this.update("location") }),
+          _react2.default.createElement('input', { type: 'submit', value: 'Submit Show' })
+        )
+      );
+    }
+  }]);
+
+  return ShowForm;
+}(_react2.default.Component);
+
+module.exports = ShowForm;
 
 /***/ })
 /******/ ]);

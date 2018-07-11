@@ -1,23 +1,38 @@
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import { createShow, editShow } from '../util/shows';
+import { fetchShow, createShow, editShow } from '../util/shows';
 
 import ShowForm from './showForm';
 
 const mSTP = (state, ownProps) => {
 
+  if (ownProps.match.path === '/createShow') {
 
-
-};
-
-const mDTP = (ownProps) => {
-
-  if (ownProps.match.path.includes("createShow")) {
     return {
-      submitReview: (review) =>
-    }
+      formType: "new"
+    };
+  } else {
+    return {
+      formType: "edit"
+    };
   }
 
 };
 
-export default withRouter(connect(mSTP, mDTP)(SessionForm));
+const mDTP = (dispatch, ownProps) => {
+
+  if (ownProps.match.path.includes("createShow")) {
+    return {
+      submitShow: (show) => createShow(show)
+    };
+  } else {
+    return {
+      fetchShow: (showId) => fetchShow(showId),
+      submitShow: (showId, show) => editShow(showId, show)
+    };
+  }
+
+};
+
+export default withRouter(connect(mDTP)(ShowForm));

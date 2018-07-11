@@ -30,6 +30,16 @@ exports.show_create = function(req, res) {
   });
 };
 
+exports.show_get = function(req, res, next) {
+  Show.findById(req.params.id, function(err, show) {
+    if (!show) {
+      return next(new Error('Could not load Document'));
+    } else {
+      res.send(show);
+    }
+  });
+};
+
 exports.show_edit = function(req, res, next) {
   Show.findById(req.params.id, function(err, show) {
     if (!show) {
@@ -46,7 +56,7 @@ exports.show_edit = function(req, res, next) {
       });
     }
   });
-}
+};
 
 exports.show_delete = function(req, res) {
   console.log(req.params.id);
@@ -57,4 +67,4 @@ exports.show_delete = function(req, res) {
       res.send(err);
     }
   });
-}
+};
