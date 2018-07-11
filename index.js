@@ -19,8 +19,6 @@ import {
 // Components
 import TestForm from './components/testForm';
 import ShowsIndex from './components/showsIndex';
-import ShowCreateForm from './components/ShowCreateForm';
-import ShowEditForm from './components/ShowEditForm';
 import ShowFormContainer from './components/showFormContainer';
 
 //top level of React component hierarchy
