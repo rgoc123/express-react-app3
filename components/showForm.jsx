@@ -47,6 +47,10 @@ class ShowForm extends React.Component {
     );
   }
 
+  componentDidMount() {
+    if (this.props.fetchShow) this.props.fetchShow(this.props.match.params.id);
+  }
+
 }
 
 module.exports = ShowForm;

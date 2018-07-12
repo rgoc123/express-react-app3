@@ -1,3 +1,21 @@
+export const fetchShow = (showId) => {
+  return fetch(`/shows/${showId}`, {
+    method: 'GET',
+    async: true
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data);
+    return data;
+  });
+    // } else {
+    //   console.log("error getting show");
+    // }
+  // });
+}
+
 export const createShow = (show) => {
   return fetch('/createShow', {
     method: 'POST',
@@ -7,19 +25,6 @@ export const createShow = (show) => {
     }
   });
 };
-
-export const fetchShow = (showId) => {
-  return fetch(`/shows/${showId}`, {
-    method: 'GET',
-    async: false
-  }).then((data) => {
-    if (data.ok) {
-      data.json().then((data) => data);
-    } else {
-      console.log("error getting show");
-    }
-  });
-}
 
 export const editShow = (showId, show) => {
   return fetch(`/shows/${showId}`, {

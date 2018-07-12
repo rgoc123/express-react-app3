@@ -3658,27 +3658,28 @@ var generatePath = function generatePath() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+var fetchShow = exports.fetchShow = function fetchShow(showId) {
+  return fetch('/shows/' + showId, {
+    method: 'GET',
+    async: true
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    console.log(data);
+    return data;
+  });
+  // } else {
+  //   console.log("error getting show");
+  // }
+  // });
+};
+
 var createShow = exports.createShow = function createShow(show) {
   return fetch('/createShow', {
     method: 'POST',
     body: JSON.stringify(show),
     headers: {
       'content-type': 'application/json'
-    }
-  });
-};
-
-var fetchShow = exports.fetchShow = function fetchShow(showId) {
-  return fetch('/shows/' + showId, {
-    method: 'GET',
-    async: false
-  }).then(function (data) {
-    if (data.ok) {
-      data.json().then(function (data) {
-        return data;
-      });
-    } else {
-      console.log("error getting show");
     }
   });
 };
@@ -26768,7 +26769,7 @@ var _reactRedux = __webpack_require__(53);
 
 var _reactRouterDom = __webpack_require__(19);
 
-var _shows = __webpack_require__(41);
+var _showActions = __webpack_require__(141);
 
 var _showForm = __webpack_require__(108);
 
@@ -26795,22 +26796,22 @@ var mDTP = function mDTP(dispatch, ownProps) {
   if (ownProps.match.path.includes("createShow")) {
     return {
       submitShow: function submitShow(show) {
-        return (0, _shows.createShow)(show);
+        return dispatch((0, _showActions.createShow)(show));
       }
     };
   } else {
     return {
       fetchShow: function fetchShow(showId) {
-        return (0, _shows.fetchShow)(showId);
+        return dispatch((0, _showActions.fetchShow)(showId));
       },
       submitShow: function submitShow(showId, show) {
-        return (0, _shows.editShow)(showId, show);
+        return dispatch((0, _showActions.editShow)(showId, show));
       }
     };
   }
 };
 
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mDTP)(_showForm2.default));
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mSTP, mDTP)(_showForm2.default));
 
 /***/ }),
 /* 108 */
@@ -26897,6 +26898,11 @@ var ShowForm = function (_React$Component) {
           _react2.default.createElement('input', { type: 'submit', value: 'Submit Show' })
         )
       );
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.fetchShow) this.props.fetchShow(this.props.match.params.id);
     }
   }]);
 
@@ -27813,7 +27819,7 @@ var showsReducer = function showsReducer() {
     case _showActions.RECEIVE_SHOWS:
       return action.shows;
     case _showActions.RECEIVE_SHOW:
-      return (0, _merge3.default)({}, state, _defineProperty({}, action.show.id, action.show));
+      return (0, _merge3.default)({}, state, _defineProperty({}, action.show._id, { band: action.show.band, location: action.show.location }));
     default:
       return state;
   }

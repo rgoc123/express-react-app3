@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { fetchShow, createShow, editShow } from '../util/shows';
+import { fetchShow, createShow, editShow } from '../actions/showActions';
 
 import ShowForm from './showForm';
 
@@ -24,15 +24,15 @@ const mDTP = (dispatch, ownProps) => {
 
   if (ownProps.match.path.includes("createShow")) {
     return {
-      submitShow: (show) => createShow(show)
+      submitShow: (show) => dispatch(createShow(show))
     };
   } else {
     return {
-      fetchShow: (showId) => fetchShow(showId),
-      submitShow: (showId, show) => editShow(showId, show)
+      fetchShow: (showId) => dispatch(fetchShow(showId)),
+      submitShow: (showId, show) => dispatch(editShow(showId, show))
     };
   }
 
 };
 
-export default withRouter(connect(mDTP)(ShowForm));
+export default withRouter(connect(mSTP, mDTP)(ShowForm));
