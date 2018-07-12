@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -13,8 +12,9 @@ import {
   HashRouter
 } from 'react-router-dom';
 
-// APIs
+import rootReducer from './reducers/rootReducer';
 
+// APIs
 
 // Components
 import TestForm from './components/testForm';
@@ -40,8 +40,11 @@ class App extends React.Component {
 //intialize store
 let store = createStore(
   // ApiApp,
+  rootReducer,
   applyMiddleware( thunk, logger )
 );
+
+window.getState = store.getState;
 
 ReactDOM.render(
   <Provider store = { store }>
