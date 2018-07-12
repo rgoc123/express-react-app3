@@ -25,13 +25,13 @@ class ShowForm extends React.Component {
       this.props.submitShow({
         band: this.state.band,
         location: this.state.location
-      }).then(this.props.history.push('/shows'));
+      }).then(() => this.props.history.push('/shows'));
     } else {
       let showId = this.props.match.params.id;
       this.props.submitShow(showId, {
         band: this.state.band,
         location: this.state.location
-      }).then(this.props.history.push('/shows'));
+      }).then(() => this.props.history.push('/shows'));
     }
   }
 

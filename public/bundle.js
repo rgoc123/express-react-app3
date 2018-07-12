@@ -26876,18 +26876,24 @@ var ShowForm = function (_React$Component) {
   }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
+      var _this3 = this;
+
       e.preventDefault();
       if (this.props.match.path === '/createShow') {
         this.props.submitShow({
           band: this.state.band,
           location: this.state.location
-        }).then(this.props.history.push('/shows'));
+        }).then(function () {
+          return _this3.props.history.push('/shows');
+        });
       } else {
         var showId = this.props.match.params.id;
         this.props.submitShow(showId, {
           band: this.state.band,
           location: this.state.location
-        }).then(this.props.history.push('/shows'));
+        }).then(function () {
+          return _this3.props.history.push('/shows');
+        });
       }
     }
   }, {
@@ -27807,9 +27813,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _showActions = __webpack_require__(141);
 
-var _merge2 = __webpack_require__(142);
+var _merge = __webpack_require__(142);
 
-var _merge3 = _interopRequireDefault(_merge2);
+var _merge2 = _interopRequireDefault(_merge);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27825,7 +27831,7 @@ var showsReducer = function showsReducer() {
     case _showActions.RECEIVE_SHOWS:
       return action.shows;
     case _showActions.RECEIVE_SHOW:
-      return (0, _merge3.default)({}, state, _defineProperty({}, action.show._id, { band: action.show.band, location: action.show.location }));
+      return _defineProperty({}, action.show._id, { band: action.show.band, location: action.show.location });
     default:
       return state;
   }
@@ -27843,7 +27849,7 @@ exports.default = showsReducer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchShow = exports.fetchShows = exports.receiveShow = exports.receiveShows = exports.RECEIVE_SHOW = exports.RECEIVE_SHOWS = undefined;
+exports.editShow = exports.createShow = exports.fetchShow = exports.fetchShows = exports.receiveShow = exports.receiveShows = exports.RECEIVE_SHOW = exports.RECEIVE_SHOWS = undefined;
 
 var _shows = __webpack_require__(41);
 
@@ -27883,6 +27889,18 @@ var fetchShow = exports.fetchShow = function fetchShow(showId) {
     return APIShows.fetchShow(showId).then(function (show) {
       return dispatch(receiveShow(show));
     });
+  };
+};
+
+var createShow = exports.createShow = function createShow(show) {
+  return function (dispatch) {
+    return APIShows.createShow(show);
+  };
+};
+
+var editShow = exports.editShow = function editShow(showId, show) {
+  return function (dispatch) {
+    return APIShows.editShow(showId, show);
   };
 };
 

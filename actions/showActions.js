@@ -31,3 +31,15 @@ export const fetchShow = (showId) => dispatch => {
     APIShows.fetchShow(showId).then(show => dispatch(receiveShow(show)))
   );
 };
+
+export const createShow = (show) => dispatch => {
+  return (
+    APIShows.createShow(show)
+  );
+};
+
+export const editShow = (showId, show) => dispatch => {
+  return (
+    APIShows.editShow(showId, show)
+  );
+};
