@@ -8,7 +8,8 @@ export const fetchShows = () => {
   })
   .then((data) => {
     return data;
-  });
+  })
+  .catch(err => console.log(err));
 }
 
 export const fetchShow = (showId) => {
@@ -21,7 +22,8 @@ export const fetchShow = (showId) => {
   })
   .then((data) => {
     return data;
-  });
+  })
+  .catch(err => console.log(err));
 }
 
 export const createShow = (show) => {
@@ -31,7 +33,8 @@ export const createShow = (show) => {
     headers: {
       'content-type': 'application/json'
     }
-  });
+  })
+  .catch(err => console.log(err));
 };
 
 export const editShow = (showId, show) => {
@@ -41,5 +44,6 @@ export const editShow = (showId, show) => {
     headers: {
       'content-type': 'application/json'
     }
-  });
+  })
+  .catch(err => console.log(err));
 };

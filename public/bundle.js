@@ -3666,6 +3666,8 @@ var fetchShows = exports.fetchShows = function fetchShows() {
     return response.json();
   }).then(function (data) {
     return data;
+  }).catch(function (err) {
+    return console.log(err);
   });
 };
 
@@ -3677,6 +3679,8 @@ var fetchShow = exports.fetchShow = function fetchShow(showId) {
     return response.json();
   }).then(function (data) {
     return data;
+  }).catch(function (err) {
+    return console.log(err);
   });
 };
 
@@ -3687,6 +3691,8 @@ var createShow = exports.createShow = function createShow(show) {
     headers: {
       'content-type': 'application/json'
     }
+  }).catch(function (err) {
+    return console.log(err);
   });
 };
 
@@ -3697,6 +3703,8 @@ var editShow = exports.editShow = function editShow(showId, show) {
     headers: {
       'content-type': 'application/json'
     }
+  }).catch(function (err) {
+    return console.log(err);
   });
 };
 
