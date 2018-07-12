@@ -1,21 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-class ShowsIndex extends React.Component {
+import { fetchShows } from '../actions/showActions';
 
-  getShowsIndex() {
-    fetch('/shows', {
-      method: 'GET',
-      async: false
-    }).then((data) => {
-      if (data.ok) {
-        data.json().then(newData => this.setState({'shows': newData}));
-      } else {
-        console.log("error");
-      }
-    });
-  }
+const mDTP = dispatch => {
+  return {
+    fetchShows: () => dispatch(fetchShows())
+  };
+}
+
+class ShowsIndex extends React.Component {
 
   editShow(id) {
     this.props.history.push(`/shows/${id}`);
@@ -63,9 +59,13 @@ class ShowsIndex extends React.Component {
   }
 
   componentDidMount() {
-    this.getShowsIndex();
+    this.props.fetchShows().then((response) => {
+      this.setState({
+        shows: response.shows
+      });
+    });
   }
 
 }
 
-export default ShowsIndex;
+export default connect(null, mDTP)(ShowsIndex);

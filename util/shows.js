@@ -1,19 +1,27 @@
-export const fetchShow = (showId) => {
-  return fetch(`/shows/${showId}`, {
-    method: 'GET',
-    async: true
+export const fetchShows = () => {
+  return fetch('/shows', {
+    methods: 'GET',
+    async: false
   })
   .then(function(response) {
     return response.json();
   })
   .then((data) => {
-    console.log(data);
     return data;
   });
-    // } else {
-    //   console.log("error getting show");
-    // }
-  // });
+}
+
+export const fetchShow = (showId) => {
+  return fetch(`/shows/${showId}`, {
+    method: 'GET',
+    async: false
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then((data) => {
+    return data;
+  });
 }
 
 export const createShow = (show) => {

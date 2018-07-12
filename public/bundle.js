@@ -3658,20 +3658,26 @@ var generatePath = function generatePath() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var fetchShow = exports.fetchShow = function fetchShow(showId) {
-  return fetch('/shows/' + showId, {
-    method: 'GET',
-    async: true
+var fetchShows = exports.fetchShows = function fetchShows() {
+  return fetch('/shows', {
+    methods: 'GET',
+    async: false
   }).then(function (response) {
     return response.json();
   }).then(function (data) {
-    console.log(data);
     return data;
   });
-  // } else {
-  //   console.log("error getting show");
-  // }
-  // });
+};
+
+var fetchShow = exports.fetchShow = function fetchShow(showId) {
+  return fetch('/shows/' + showId, {
+    method: 'GET',
+    async: false
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    return data;
+  });
 };
 
 var createShow = exports.createShow = function createShow(show) {
@@ -26611,11 +26617,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(53);
+
 var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(19);
+
+var _showActions = __webpack_require__(141);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26625,28 +26635,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var mDTP = function mDTP(dispatch) {
+  return {
+    fetchShows: function fetchShows() {
+      return dispatch((0, _showActions.fetchShows)());
+    }
+  };
+};
+
 var ShowsIndex = function (_React$Component) {
   _inherits(ShowsIndex, _React$Component);
 
   _createClass(ShowsIndex, [{
-    key: 'getShowsIndex',
-    value: function getShowsIndex() {
-      var _this2 = this;
-
-      fetch('/shows', {
-        method: 'GET',
-        async: false
-      }).then(function (data) {
-        if (data.ok) {
-          data.json().then(function (newData) {
-            return _this2.setState({ 'shows': newData });
-          });
-        } else {
-          console.log("error");
-        }
-      });
-    }
-  }, {
     key: 'editShow',
     value: function editShow(id) {
       this.props.history.push('/shows/' + id);
@@ -26674,7 +26674,7 @@ var ShowsIndex = function (_React$Component) {
   _createClass(ShowsIndex, [{
     key: 'createShowsList',
     value: function createShowsList() {
-      var _this3 = this;
+      var _this2 = this;
 
       if (this.state.shows) {
         return this.state.shows.map(function (show) {
@@ -26694,14 +26694,14 @@ var ShowsIndex = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { onClick: function onClick() {
-                  return _this3.editShow(show._id);
+                  return _this2.editShow(show._id);
                 } },
               'Edit'
             ),
             _react2.default.createElement(
               'button',
               { onClick: function onClick() {
-                  return _this3.deleteShow(show._id);
+                  return _this2.deleteShow(show._id);
                 } },
               'Delete'
             )
@@ -26742,14 +26742,20 @@ var ShowsIndex = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.getShowsIndex();
+      var _this3 = this;
+
+      this.props.fetchShows().then(function (response) {
+        _this3.setState({
+          shows: response.shows
+        });
+      });
     }
   }]);
 
   return ShowsIndex;
 }(_react2.default.Component);
 
-exports.default = ShowsIndex;
+exports.default = (0, _reactRedux.connect)(null, mDTP)(ShowsIndex);
 
 /***/ }),
 /* 104 */,
