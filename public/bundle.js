@@ -30050,10 +30050,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ShowForm = function (_React$Component) {
   _inherits(ShowForm, _React$Component);
 
-  function ShowForm(props) {
+  function ShowForm() {
     _classCallCheck(this, ShowForm);
 
-    var _this = _possibleConstructorReturn(this, (ShowForm.__proto__ || Object.getPrototypeOf(ShowForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ShowForm.__proto__ || Object.getPrototypeOf(ShowForm)).call(this));
 
     _this.state = {
       band: "",
@@ -30104,8 +30104,8 @@ var ShowForm = function (_React$Component) {
         _react2.default.createElement(
           'form',
           { onSubmit: this.handleSubmit },
-          _react2.default.createElement('input', { type: 'text', onChange: this.update("band") }),
-          _react2.default.createElement('input', { type: 'text', onChange: this.update("location") }),
+          _react2.default.createElement('input', { type: 'text', onChange: this.update("band"), value: this.state.band }),
+          _react2.default.createElement('input', { type: 'text', onChange: this.update("location"), value: this.state.location }),
           _react2.default.createElement('input', { type: 'submit', value: 'Submit Show' })
         )
       );
@@ -30113,17 +30113,19 @@ var ShowForm = function (_React$Component) {
   }, {
     key: 'componentWillMount',
     value: function componentWillMount() {
-      if (this.props.fetchShow) {
-        this.props.fetchShow(this.props.match.params.id);
+      var _this4 = this;
+
+      if (this.props.match.params.id) {
+        // The below line is for Redux, and illustrates you don't need to
+        // access app state to get information
+        // this.props.fetchShow(this.props.match.params.id);
         var show = void 0;
         (0, _shows.fetchShow)(this.props.match.params.id).then(function (res) {
           show = res;
-          console.log(show);
-          // this.setState({
-          //   band: show.band,
-          //   location: show.location
-          // })
-          // console.log(this.state);
+          _this4.setState({
+            band: show.band,
+            location: show.location
+          });
         });
       }
       // fetchShow2(this.props.match.params.id);

@@ -8,8 +8,8 @@ import { fetchShow2 } from '../actions/showActions';
 
 class ShowForm extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       band: "",
       location: ""
@@ -43,8 +43,8 @@ class ShowForm extends React.Component {
     return(
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input type="text" onChange={this.update("band")} />
-          <input type="text" onChange={this.update("location")} />
+          <input type="text" onChange={this.update("band")} value={this.state.band}/>
+          <input type="text" onChange={this.update("location")} value={this.state.location}/>
           <input type="submit" value="Submit Show" />
         </form>
       </div>
@@ -52,18 +52,18 @@ class ShowForm extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.fetchShow) {
-      this.props.fetchShow(this.props.match.params.id);
+    if (this.props.match.params.id) {
+      // The below line is for Redux, and illustrates you don't need to
+      // access app state to get information
+      // this.props.fetchShow(this.props.match.params.id);
       let show;
       fetchShow(this.props.match.params.id).then((res) => {
         show = res;
-        console.log(show);
-        // this.setState({
-        //   band: show.band,
-        //   location: show.location
-        // })
-        // console.log(this.state);
-      })
+        this.setState({
+          band: show.band,
+          location: show.location
+        });
+      });
     }
     // fetchShow2(this.props.match.params.id);
   }
