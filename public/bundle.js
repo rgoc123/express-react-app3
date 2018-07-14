@@ -2426,10 +2426,7 @@ var RECEIVE_SHOW = exports.RECEIVE_SHOW = 'RECEIVE_SHOW';
 
 // ASYNC ACTIONS
 var receiveShows = exports.receiveShows = function receiveShows(shows) {
-  return {
-    type: RECEIVE_SHOWS,
-    shows: shows
-  };
+  return { type: RECEIVE_SHOWS, shows: shows };
 };
 
 var receiveShow = exports.receiveShow = function receiveShow(show) {
