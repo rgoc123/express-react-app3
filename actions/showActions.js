@@ -1,3 +1,6 @@
+import { ofType } from 'redux-observable';
+import { filter, mapTo, mergeMap } from 'rxjs/operators';
+
 import * as APIShows from '../util/shows';
 
 export const RECEIVE_SHOWS = 'RECEIVE_SHOWS';
@@ -19,6 +22,22 @@ export const receiveShow = show => {
   };
 };
 
+// EPIC
+const fetchShowEpic = action => action.pipe(
+  ofType(RECEIVE_SHOW),
+  mergeMap(action =>
+    $.ajax({
+      url: `/shows/${action.show.id}`,
+      method: 'GET'
+    }).pipe(
+      map(response => {
+        console.log(response);
+        fetchShow(response);
+      })
+    )
+  )
+);
+
 // THUNK ACTIONS
 export const fetchShows = () => dispatch => {
   return (
@@ -27,6 +46,12 @@ export const fetchShows = () => dispatch => {
 };
 
 export const fetchShow = (showId) => dispatch => {
+  return (
+    APIShows.fetchShow(showId).then(show => dispatch(receiveShow(show)))
+  );
+};
+
+export const fetchShow2 = (showId) => dispatch => {
   return (
     APIShows.fetchShow(showId).then(show => dispatch(receiveShow(show)))
   );

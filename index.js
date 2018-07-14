@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import {
@@ -13,6 +14,8 @@ import {
 } from 'react-router-dom';
 
 import rootReducer from './reducers/rootReducer';
+import { rootEpic } from './reducers/rootReducer';
+
 
 // APIs
 
@@ -38,16 +41,27 @@ class App extends React.Component {
 }
 
 //intialize store
+const epicMiddleware = createEpicMiddleware();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 let store = createStore(
   // ApiApp,
   rootReducer,
-  applyMiddleware( thunk, logger )
+  composeEnhancers(
+    applyMiddleware( thunk, logger, epicMiddleware )
+  )
 );
+
+function configureStore(store) {
+  // epicMiddleware.run(rootEpic);
+
+  return store;
+}
 
 window.getState = store.getState;
 
 ReactDOM.render(
-  <Provider store = { store }>
+  <Provider store = { configureStore(store) }>
     <HashRouter>
       <App />
     </HashRouter>
